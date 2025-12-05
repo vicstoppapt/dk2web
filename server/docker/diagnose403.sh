@@ -10,7 +10,7 @@ echo ""
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SERVER_DIR="$(dirname "$SCRIPT_DIR")"
 WEB_DIR="$SERVER_DIR/web"
-
+ 
 echo "1. Checking web directory on host..."
 if [ -d "$WEB_DIR" ]; then
     echo "✓ $WEB_DIR exists"

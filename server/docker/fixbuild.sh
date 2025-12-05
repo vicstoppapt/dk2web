@@ -12,7 +12,7 @@ SERVER_DIR="$(dirname "$SCRIPT_DIR")"
 
 echo "Server directory: $SERVER_DIR"
 cd "$SERVER_DIR"
-
+ 
 # Check if required directories exist
 echo ""
 echo "Checking required files..."

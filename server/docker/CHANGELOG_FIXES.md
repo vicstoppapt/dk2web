@@ -8,7 +8,7 @@ This document lists all fixes that were applied to resolve issues encountered du
 **Issue**: HTTPS was not working - connection refused  
 **Fix**: Updated `docker/nginx/default.conf` with SSL configuration
 
-**Changes**:
+**Changes**: 
 - Added HTTPS server block (port 443)
 - Configured SSL certificates from `/etc/letsencrypt/live/denostaugia.com/`
 - Added HTTP to HTTPS redirect

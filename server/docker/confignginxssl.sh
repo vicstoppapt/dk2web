@@ -10,7 +10,7 @@ echo ""
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 NGINX_CONF="$SCRIPT_DIR/nginx/default.conf"
 SSL_CERT_PATH="/etc/letsencrypt/live/denostaugia.com"
-
+ 
 # Check if certificates exist
 echo "1. Checking SSL certificates..."
 if [ ! -d "$SSL_CERT_PATH" ]; then

@@ -11,7 +11,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SERVER_DIR="$(dirname "$SCRIPT_DIR")"
 WEB_DIR="$SERVER_DIR/web"
 SOURCE_DIR="/var/www/denostaugia.com"
-
+ 
 # Check if source directory exists
 if [ ! -d "$SOURCE_DIR" ]; then
     echo "❌ ERROR: $SOURCE_DIR does not exist!"
