@@ -1,0 +1,11 @@
+﻿#MarketItems{
+    margin: 0 auto !important;
+    float: none !important;
+    max-width: 1100px;
+    min-width: 690px;
+    background-image:url("../Images/Ouster_Background.png");
+    height: 700px;
+    position: relative;
+    bottom: 148px;
+    z-index: -1;
+}
