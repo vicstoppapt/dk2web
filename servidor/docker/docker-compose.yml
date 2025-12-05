@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  darkeden-mysql:
+    image: mysql:5.7
+    container_name: darkeden-mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../initdb:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: DARKEDEN
+    command: >
+      mysqld
+      --sql_mode="ONLY_FULL_GROUP_BY,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
+    networks:
+      - darkeden-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # DarkEden Game Server
+  darkeden-server:
+    image: darkeden:latest
+    container_name: darkeden-server
+    build:
+      context: ..
+      dockerfile: Dockerfile.pub
+    command: ["sleep", "infinity"]
+    depends_on:
+      darkeden-mysql:
+        condition: service_healthy
+    volumes:
+      - ../bin:/home/darkeden/vs/bin
+      - ../data:/home/darkeden/vs/data
+      - ./conf:/home/darkeden/vs/conf
+    ports:
+      - "9999:9999"   # Login Server TCP
+      - "9998:9998"   # Game Server TCP
+      - "9977:9977"   # Shared Server TCP
+      - "9997:9997/udp"  # Game Server UDP
+      - "9996:9996/udp"  # Login Server UDP
+    networks:
+      - darkeden-network
+    restart: unless-stopped
+
+  # PHP-FPM for Web Panel
+  darkeden-php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    container_name: darkeden-php
+    volumes:
+      - ../web:/var/www/html
+    depends_on:
+      - darkeden-mysql
+    networks:
+      - darkeden-network
+    restart: unless-stopped
+
+  # Nginx Web Server
+  darkeden-nginx:
+    image: nginx:alpine
+    container_name: darkeden-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../web:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - darkeden-php
+    networks:
+      - darkeden-network
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  darkeden-network:
+    driver: bridge
+
