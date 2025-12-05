@@ -6,7 +6,9 @@ echo "Configuring SSL for Docker Nginx"
 echo "=========================================="
 echo ""
 
-NGINX_CONF="/opt/opendarkeden/servidor/docker/nginx/default.conf"
+# Get paths relative to script location
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+NGINX_CONF="$SCRIPT_DIR/nginx/default.conf"
 SSL_CERT_PATH="/etc/letsencrypt/live/denostaugia.com"
 
 # Check if certificates exist
@@ -58,7 +60,7 @@ server {
     root /var/www/html;
     index index.php index.html;
 
-    # SSL Configuration
+    # SSL Configuration (mounted from host)
     ssl_certificate /etc/letsencrypt/live/denostaugia.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/denostaugia.com/privkey.pem;
     ssl_trusted_certificate /etc/letsencrypt/live/denostaugia.com/chain.pem;

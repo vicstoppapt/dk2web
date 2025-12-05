@@ -6,7 +6,10 @@ echo "Fixing 403 Forbidden Error"
 echo "=========================================="
 echo ""
 
-WEB_DIR="/opt/opendarkeden/servidor/web"
+# Get server directory (parent of docker/)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SERVER_DIR="$(dirname "$SCRIPT_DIR")"
+WEB_DIR="$SERVER_DIR/web"
 SOURCE_DIR="/var/www/denostaugia.com"
 
 # Check if source directory exists

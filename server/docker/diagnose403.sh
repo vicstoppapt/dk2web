@@ -6,13 +6,18 @@ echo "403 Forbidden Diagnostic"
 echo "=========================================="
 echo ""
 
+# Get server directory (parent of docker/)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SERVER_DIR="$(dirname "$SCRIPT_DIR")"
+WEB_DIR="$SERVER_DIR/web"
+
 echo "1. Checking web directory on host..."
-if [ -d "/opt/opendarkeden/servidor/web" ]; then
-    echo "✓ /opt/opendarkeden/servidor/web exists"
+if [ -d "$WEB_DIR" ]; then
+    echo "✓ $WEB_DIR exists"
     echo "   Contents:"
-    ls -la /opt/opendarkeden/servidor/web/ | head -10
+    ls -la "$WEB_DIR"/ | head -10
 else
-    echo "✗ /opt/opendarkeden/servidor/web does NOT exist"
+    echo "✗ $WEB_DIR does NOT exist"
 fi
 echo ""
 
@@ -52,7 +57,7 @@ echo "Diagnostic Complete"
 echo "=========================================="
 echo ""
 echo "Common fixes:"
-echo "1. Create web directory: mkdir -p /opt/opendarkeden/servidor/web"
-echo "2. Copy files: cp -r /var/www/denostaugia.com/* /opt/opendarkeden/servidor/web/"
+echo "1. Create web directory: mkdir -p $WEB_DIR"
+echo "2. Copy files: cp -r /var/www/denostaugia.com/* $WEB_DIR/"
 echo "3. Or update docker-compose.yml to mount /var/www/denostaugia.com"
 
