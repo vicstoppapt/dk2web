@@ -1,0 +1,191 @@
+﻿html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+@font-face {
+    font-family: Header;
+    src: url(../fonts/Metamorphous-Regular.ttf);
+}
+
+.Content {
+    position: relative;
+    margin: 0 auto !important;
+    float: none !important;
+    max-width: 1100px;
+    min-width: 690px;
+    background-image: url("../Images/newspaper_background-793x998.jpg");
+    background-color: #3f3f3E;
+    height: 700px;
+    background-repeat: no-repeat;
+}
+
+.News {
+    margin: 0 auto !important;
+    padding: 25px;
+}
+
+    .News h2 {
+        font-family: Metamorphous-Regular;
+        font-size: 25pt;
+        color: #85100F;
+        padding-top: 5px;
+        text-decoration: underline;
+        padding-bottom: 15px;
+    }
+
+    .News h3 {
+        font-family: Metamorphous-Regular;
+        font-size: 15pt;
+        color: #44453F;
+    }
+
+#LeftContent {
+    width: 740px;
+    float: left;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+    #LeftContent img {
+        padding-bottom: 50px;
+    }
+
+#RightContent {
+    float: left;
+    position: relative;
+    width: 310px;
+    left: 43px;
+    overflow: hidden;
+    padding-top: 10px;
+    background-image: url("../Images/Darkeden.jpg");
+}
+
+    #RightContent #server {
+        width: 310px;
+        height: 390px;
+    }
+
+#DownloadClient {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#DownloadClient2 {
+    position: relative;
+    bottom: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#market {
+    height: 280px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1102px;
+}
+
+#SlideShow {
+    max-width: 100%;
+    position: relative;
+    bottom: 3px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1102px;
+}
+
+#login {
+    color: #fff;
+    padding-top: 20px;
+}
+
+    #login h1 {
+        text-align: center;
+    }
+
+    #login input {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #login button {
+        background-color: grey;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+    }
+
+.holder img {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+}
+
+.carousel {
+    margin: 0 auto !important;
+    float: none !important;
+    width: 1100px;
+    height: 180px;
+    overflow: hidden;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 2px solid #999;
+    box-shadow: 0 0 4px #000;
+    background-color: gray;
+}
+
+.holder {
+    width: 10000px;
+    animation: carousel 25s linear infinite;
+}
+
+@keyframes carousel {
+    0% {
+        margin-left: 0;
+    }
+
+    50% {
+        margin-left: -500px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #RightContent {
+        position: relative;
+        bottom: 640px;
+        left: 700px;
+        margin-bottom: -1000px;
+    }
+
+    .carousel {
+        width: 1000px;
+    }
+}

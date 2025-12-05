@@ -1,0 +1,31 @@
+﻿@model DarkEdenWebsite.Models.Update
+@{
+    Layout = "~/Views/Shared/_DarkEdenLayout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Styles/NewsEventStyle.css" />
+<h1>News & Events</h1>
+    <div class="content">
+        <div id="News">
+            <h2>News</h2>
+            @foreach (var item in Model.TheListOfUpdates)
+            {
+                if (item.TypeOfUpdate == DarkEdenWebsite.Models.UpdateType.News)
+                {
+                    @Html.Partial("_NewsPartial", item)
+                }
+
+            }
+        </div>
+        <div id="Events">
+            <h2>Events</h2>
+            @foreach (var item in Model.TheListOfUpdates)
+            {
+                if (item.TypeOfUpdate == DarkEdenWebsite.Models.UpdateType.Events)
+                {
+                    @Html.Partial("_NewsPartial", item)
+                }
+
+            }
+
+        </div>
+    </div>

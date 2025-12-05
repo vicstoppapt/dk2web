@@ -1,0 +1,11 @@
+﻿#MarketItems{
+    background-image:url("../Images/Vampire_Background.png");
+    margin: 0 auto !important;
+    float: none !important;
+    max-width: 1100px;
+    min-width: 690px;
+    height: 700px;
+    position: relative;
+    bottom: 114px;
+    z-index: -1;
+}

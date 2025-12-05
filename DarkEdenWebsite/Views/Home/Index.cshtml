@@ -1,0 +1,40 @@
+﻿@model DarkEdenWebsite.Models.Update
+@{
+    Layout = "~/Views/Shared/_DarkEdenLayout.cshtml";
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" type="text/css" href="~/Styles/HomeStyle.css" />
+<img id="SlideShow" src="~/Images/slider-banner-darkeden.jpg" />
+<div class="Content">
+    <div id="LeftContent">
+        <div class="News">
+            <h2>UPDATES</h2>
+            @foreach(var item in Model.TheListOfUpdates ){
+                    @Html.Partial("_NewsPartial", item)
+            }
+        </div>
+    </div>
+    <div id="RightContent">
+        <img id="DownloadClient"src="~/Images/game_start_bg.jpg"/>
+        <img id="DownloadClient2" src="~/Images/game_start_menu.jpg"/>
+        <div id="login">
+            <h1>Login/Register</h1>
+            <form>
+                <input type="text" placeholder="ID"/>
+                <input type="password" placeholder="Password"/>
+                <button>Enter</button>
+            </form>
+           <img id="server" src="~/Images/0801_eb_a0_88_eb_b2_a8_eb_8b_ac_ec_84_b13_720.png"/>
+        </div>
+    </div>
+</div>
+<div class="carousel">
+    <div class="holder">
+        <img src="~/Images/LilithCrystal.png" alt="" />
+        <img src="~/Images/Oblivion Crystal.png" alt="" />
+        <img src="~/Images/Pet Potion.png" alt="" />
+        <img src="~/Images/Experience Hourglass.png" alt="" />
+
+    </div>
+</div>
+
