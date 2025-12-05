@@ -1,6 +1,13 @@
 <?php 
+// Enable error reporting for debugging (remove in production)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+// Load config.php for variables (even if DB is commented out)
+require_once("config.php");
+
 /* DATABASE CONNECTION COMMENTED OUT FOR VIEW MODE
-require_once("config.php"); 
 $link = @mysql_connect($db_host, $db_user, $db_pass) or exit("
 	<script language='javascript'>
 		alert('Estamos actualizando, regrese en unos minutos!')
@@ -169,11 +176,11 @@ else
 				<input name="btn_login" type="image" src="images/input-login.png"><img src="images/parte.png" width="200" height="9" /><br />
 				
 		</form></center>
-<?
+<?php
 }
 ?>
 	  </div>
-<?
+<?php
 /* SQL QUERIES COMMENTED OUT FOR VIEW MODE
 $result2 = mysql_query("SELECT * FROM `Vampire` WHERE `Level`+`AdvancementClass` > 1 AND `Competence` = 3 AND `Active` != 'INACTIVE' ORDER BY `SMSCharge` DESC, `AdvancementClass` DESC, `Fame` DESC,  `AdvancementGoalExp` DESC")
 or die(mysql_error());
