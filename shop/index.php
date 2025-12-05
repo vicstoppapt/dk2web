@@ -15,7 +15,16 @@ $db = getDB();
 
 // Get shop items (adjust table name based on your database)
 // Original used GoodsListInfo table
-$items = $db->query("SELECT * FROM GoodsListInfo LIMIT 50");
+if ($db && isDBConnected()) {
+    try {
+        $items = $db->query("SELECT * FROM GoodsListInfo LIMIT 50");
+    } catch (Exception $e) {
+        $items = false;
+    }
+} else {
+    // VIEW MODE: Mock shop items
+    $items = false; // Will show "No items available" message
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

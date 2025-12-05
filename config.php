@@ -29,15 +29,26 @@ $vampire_rank_limit = 5; // Number of Vampires in TOP RANK
 $ousters_rank_limit = 5; // Number of Ousters in TOP RANK
 
 // Database Connection (Modern MySQLi)
-$mysqli = new mysqli($host, $user, $pass, $db);
+// VIEW MODE: Set to true to view pages without database connection
+define('VIEW_MODE', true); // Set to false when database is ready
 
-// Check connection
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
+$mysqli = null;
+$db_connected = false;
+
+if (!VIEW_MODE) {
+    $mysqli = new mysqli($host, $user, $pass, $db);
+    
+    // Check connection
+    if ($mysqli->connect_error) {
+        // Don't die, just set flag for graceful degradation
+        $db_connected = false;
+        error_log("Database connection failed: " . $mysqli->connect_error);
+    } else {
+        $db_connected = true;
+        // Set charset to utf8
+        $mysqli->set_charset("utf8");
+    }
 }
-
-// Set charset to utf8
-$mysqli->set_charset("utf8");
 
 // Helper Functions
 function isAlNum($str) {
@@ -62,8 +73,17 @@ function clean_input($data) {
 
 // Get database connection (for use in other files)
 function getDB() {
-    global $mysqli;
+    global $mysqli, $db_connected;
+    if (VIEW_MODE || !$db_connected) {
+        return null; // Return null in view mode or if not connected
+    }
     return $mysqli;
+}
+
+// Check if database is available
+function isDBConnected() {
+    global $db_connected;
+    return !VIEW_MODE && $db_connected;
 }
 
 ?>

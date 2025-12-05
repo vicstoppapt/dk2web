@@ -14,10 +14,22 @@ $playerid = $_SESSION['playerid'];
 $db = getDB();
 
 // Get player characters
-$stmt = $db->prepare("SELECT Name, Level, Race, Fame FROM PlayerCreature WHERE PlayerID = ?");
-$stmt->bind_param("s", $playerid);
-$stmt->execute();
-$characters = $stmt->get_result();
+if ($db && isDBConnected()) {
+    try {
+        $stmt = $db->prepare("SELECT Name, Level, Race, Fame FROM PlayerCreature WHERE PlayerID = ?");
+        $stmt->bind_param("s", $playerid);
+        $stmt->execute();
+        $characters = $stmt->get_result();
+        $has_characters = $characters && $characters->num_rows > 0;
+    } catch (Exception $e) {
+        $characters = false;
+        $has_characters = false;
+    }
+} else {
+    // VIEW MODE: Mock characters
+    $characters = false;
+    $has_characters = false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +46,7 @@ $characters = $stmt->get_result();
     
     <div class="section">
         <h2>My Characters</h2>
-        <?php if ($characters->num_rows > 0): ?>
+        <?php if ($has_characters): ?>
             <table>
                 <thead>
                     <tr>

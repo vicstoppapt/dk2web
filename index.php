@@ -14,17 +14,37 @@ include 'header.php';
             // Get server statistics
             $db = getDB();
             
-            // Total players
-            $total_players = $db->query("SELECT COUNT(*) as total FROM Player")->fetch_assoc()['total'];
-            
-            // Online players (you may need to adjust this query based on your database structure)
-            $online_players = 0; // Placeholder - implement based on your server structure
-            
-            // Total characters
-            $total_chars = $db->query("SELECT COUNT(*) as total FROM PlayerCreature")->fetch_assoc()['total'] ?? 0;
-            
-            // Guilds
-            $total_guilds = $db->query("SELECT COUNT(*) as total FROM GuildInfo")->fetch_assoc()['total'] ?? 0;
+            // VIEW MODE: Use mock data if database not available
+            if (!$db || !isDBConnected()) {
+                // Mock data for viewing
+                $total_players = 1250;
+                $online_players = 42;
+                $total_chars = 3420;
+                $total_guilds = 18;
+            } else {
+                try {
+                    // Total players
+                    $result = $db->query("SELECT COUNT(*) as total FROM Player");
+                    $total_players = $result ? $result->fetch_assoc()['total'] : 0;
+                    
+                    // Online players (you may need to adjust this query based on your database structure)
+                    $online_players = 0; // Placeholder - implement based on your server structure
+                    
+                    // Total characters
+                    $result = $db->query("SELECT COUNT(*) as total FROM PlayerCreature");
+                    $total_chars = $result ? ($result->fetch_assoc()['total'] ?? 0) : 0;
+                    
+                    // Guilds
+                    $result = $db->query("SELECT COUNT(*) as total FROM GuildInfo");
+                    $total_guilds = $result ? ($result->fetch_assoc()['total'] ?? 0) : 0;
+                } catch (Exception $e) {
+                    // Fallback to mock data on error
+                    $total_players = 1250;
+                    $online_players = 42;
+                    $total_chars = 3420;
+                    $total_guilds = 18;
+                }
+            }
             ?>
             
             <div class="stats-grid">

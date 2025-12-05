@@ -14,11 +14,20 @@ $playerid = $_SESSION['playerid'];
 $db = getDB();
 
 // Get player's gold medals
-$stmt = $db->prepare("SELECT SUM(Amount) as total FROM GoldMedal WHERE PlayerID = ?");
-$stmt->bind_param("s", $playerid);
-$stmt->execute();
-$result = $stmt->get_result();
-$total_medals = $result->fetch_assoc()['total'] ?? 0;
+if ($db && isDBConnected()) {
+    try {
+        $stmt = $db->prepare("SELECT SUM(Amount) as total FROM GoldMedal WHERE PlayerID = ?");
+        $stmt->bind_param("s", $playerid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $total_medals = $result->fetch_assoc()['total'] ?? 0;
+    } catch (Exception $e) {
+        $total_medals = 0;
+    }
+} else {
+    // VIEW MODE: Mock data
+    $total_medals = 25;
+}
 $total_points = $total_medals * $medalvalue;
 ?>
 <!DOCTYPE html>
@@ -52,12 +61,24 @@ $total_points = $total_medals * $medalvalue;
     <div class="section">
         <h2>Medal History</h2>
         <?php
-        $stmt = $db->prepare("SELECT * FROM GoldMedal WHERE PlayerID = ? ORDER BY Date DESC LIMIT 20");
-        $stmt->bind_param("s", $playerid);
-        $stmt->execute();
-        $medals = $stmt->get_result();
+        if ($db && isDBConnected()) {
+            try {
+                $stmt = $db->prepare("SELECT * FROM GoldMedal WHERE PlayerID = ? ORDER BY Date DESC LIMIT 20");
+                $stmt->bind_param("s", $playerid);
+                $stmt->execute();
+                $medals = $stmt->get_result();
+                $has_medals = $medals && $medals->num_rows > 0;
+            } catch (Exception $e) {
+                $medals = false;
+                $has_medals = false;
+            }
+        } else {
+            // VIEW MODE: Mock medal history
+            $medals = false;
+            $has_medals = false;
+        }
         
-        if ($medals->num_rows > 0):
+        if ($has_medals):
         ?>
             <table>
                 <thead>

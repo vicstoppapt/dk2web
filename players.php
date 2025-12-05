@@ -12,13 +12,26 @@ $search = isset($_GET['search']) ? clean_input($_GET['search']) : '';
 $players = [];
 
 if ($search) {
-    $stmt = $db->prepare("SELECT PlayerID, Name, Level, Race, Fame FROM PlayerCreature WHERE Name LIKE ? OR PlayerID LIKE ? LIMIT 50");
-    $search_term = "%$search%";
-    $stmt->bind_param("ss", $search_term, $search_term);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $players[] = $row;
+    if ($db && isDBConnected()) {
+        try {
+            $stmt = $db->prepare("SELECT PlayerID, Name, Level, Race, Fame FROM PlayerCreature WHERE Name LIKE ? OR PlayerID LIKE ? LIMIT 50");
+            $search_term = "%$search%";
+            $stmt->bind_param("ss", $search_term, $search_term);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $players[] = $row;
+            }
+        } catch (Exception $e) {
+            // Fallback to empty results
+            $players = [];
+        }
+    } else {
+        // VIEW MODE: Mock search results
+        $players = [
+            ['PlayerID' => 'player1', 'Name' => 'TestCharacter', 'Level' => 50, 'Race' => 'SLAYER', 'Fame' => 50000],
+            ['PlayerID' => 'player2', 'Name' => 'DemoChar', 'Level' => 45, 'Race' => 'VAMPIRE', 'Fame' => 45000]
+        ];
     }
 }
 ?>
