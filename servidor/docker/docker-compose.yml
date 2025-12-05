@@ -29,9 +29,11 @@ services:
   darkeden-server:
     image: darkeden:latest
     container_name: darkeden-server
-    build:
-      context: ..
-      dockerfile: Dockerfile.pub
+    # Build separately first: docker build -t darkeden:latest -f Dockerfile.pub ..
+    # Uncomment below if you want to build on-the-fly (slower):
+    # build:
+    #   context: ..
+    #   dockerfile: Dockerfile.pub
     command: ["sleep", "infinity"]
     depends_on:
       darkeden-mysql:
@@ -75,6 +77,7 @@ services:
       - ../web:/var/www/html
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro  # Mount SSL certificates (read-only)
     depends_on:
       - darkeden-php
     networks:
