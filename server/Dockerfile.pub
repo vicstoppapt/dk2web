@@ -7,14 +7,19 @@ RUN apt update && apt install -y \
     libmysqlclient-dev \
     liblua5.1-dev \
     psmisc \
+    gcc \
+    build-essential \
+    xutils-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /home/darkeden
 RUN mkdir /home/darkeden/vs
-RUN mkdir /home/darkeden/vs/src
+#RUN mkdir /home/darkeden/vs/src
 
 COPY bin /home/darkeden/vs/bin/
-COPY data /home/darkeden/vs/data/
 COPY docker/conf /home/darkeden/vs/conf/
+COPY data /home/darkeden/vs/data/
+COPY initdb /home/darkeden/vs/initdb/
+COPY src /home/darkeden/vs/src/
 
 WORKDIR /home/darkeden/vs/bin
