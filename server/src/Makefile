@@ -17,22 +17,47 @@ TEMPDIR   = $(VSHOME)/temp
 #----------------------------------------------------------------------
 # actions
 #----------------------------------------------------------------------
-all :
-	$(MAKE) -C Core
-	$(MAKE) -C server
-#	$(MAKE) -C util
+# Build all servers sequentially (for low-performance systems)
+# Core libraries are built once first, then each server builds separately
+# This prevents multiple processes from compiling shared files simultaneously
+all : corelib step1 step2 step3
 
-allgameserver :
+# Build shared Core library first (used by all servers)
+# This ensures shared components are compiled only once, reducing RAM usage
+corelib :
+	$(MAKE) -C Core core
+
+# Step 1: Build gameserver (only server-specific components)
+step1 : corelib
 	$(MAKE) -C Core allgameserver
 	$(MAKE) -C server allgameserver
 #	$(MAKE) -C util
 
-allloginserver :
+# Step 2: Build loginserver (only server-specific components)
+step2 : corelib
 	$(MAKE) -C Core allloginserver
 	$(MAKE) -C server allloginserver
 #	$(MAKE) -C util
 
-allsharedserver :
+# Step 3: Build sharedserver (only server-specific components)
+step3 : corelib
+	$(MAKE) -C Core allsharedserver
+	$(MAKE) -C server allsharedserver
+
+# Build gameserver (Core + server components)
+allgameserver : corelib
+	$(MAKE) -C Core allgameserver
+	$(MAKE) -C server allgameserver
+#	$(MAKE) -C util
+
+# Build loginserver (Core + server components)
+allloginserver : corelib
+	$(MAKE) -C Core allloginserver
+	$(MAKE) -C server allloginserver
+#	$(MAKE) -C util
+
+# Build sharedserver (Core + server components)
+allsharedserver : corelib
 	$(MAKE) -C Core allsharedserver
 	$(MAKE) -C server allsharedserver
 
