@@ -20,7 +20,7 @@ services:
     networks:
       - darkeden-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "c547vk92b1ELV"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pc547vk92b1ELV"]
       interval: 10s
       timeout: 5s
       retries: 5
