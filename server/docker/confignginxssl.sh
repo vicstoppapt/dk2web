@@ -130,7 +130,7 @@ echo "=========================================="
 echo ""
 echo "Test URLs:"
 echo "  https://denostaugia.com"
-echo "  https://64.225.30.8"
+echo "  https://167.71.106.232"
 echo ""
 echo "Note: HTTP will redirect to HTTPS"
 

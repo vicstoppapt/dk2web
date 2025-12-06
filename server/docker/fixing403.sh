@@ -66,6 +66,6 @@ curl -I http://localhost 2>&1 | head -5
 echo ""
 echo "=========================================="
 echo "Done! Try accessing:"
-echo "  http://64.225.30.8"
+echo "  http://167.71.106.232"
 echo "=========================================="
 

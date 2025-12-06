@@ -6,7 +6,7 @@ echo "Starting DarkEden Game Servers"
 echo "=========================================="
 echo ""
 
-SERVER_IP="64.225.30.8"
+SERVER_IP="167.71.106.232"
 CONF_DIR="/opt/opendarkeden/server/docker/conf"
 
 # Step 1: Update config files

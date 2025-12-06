@@ -4,7 +4,7 @@
 USE DARKEDEN;
 
 -- Update GameServerInfo table with your server IP
-UPDATE GameServerInfo SET IP = '64.225.30.8';
+UPDATE GameServerInfo SET IP = '167.71.106.232';
 
 -- Update WorldDBInfo table - Change Host from 'odk-mysql' to 'darkeden-mysql'
 -- Note: WorldDBInfo uses 'Host' column, not 'IP'
